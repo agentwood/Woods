@@ -3,8 +3,9 @@
   publish = "dist"
 
 [build.environment]
-  NODE_VERSION = "20"
+  NODE_VERSION = "22.12.0"
   BETTER_AUTH_URL = "https://joinwoods.co"
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_APP_URL,NEXT_PUBLIC_SUPPORT_EMAIL"
 
 [[redirects]]
   from = "/*"
