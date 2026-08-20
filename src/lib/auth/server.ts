@@ -67,6 +67,14 @@ const env = (key: string): string | undefined => {
   return value ? value : undefined;
 };
 
+const firstEnv = (...keys: string[]): string | undefined => {
+  for (const key of keys) {
+    const value = env(key);
+    if (value) return value;
+  }
+  return undefined;
+};
+
 // Explicit off-switch. The deployer sets `VITE_AUTH_ENABLED=true` when it
 // provisions auth; set it to "false" to force auth off everywhere (dev user).
 const authDisabled = env("VITE_AUTH_ENABLED") === "false";
@@ -77,8 +85,8 @@ const authDisabled = env("VITE_AUTH_ENABLED") === "false";
 const grokIssuer = env("GROK_AUTH_ISSUER") ?? GROK_ISSUER_DEFAULT;
 const grokClientId = env("GROK_AUTH_CLIENT_ID");
 const grokClientSecret = env("GROK_AUTH_CLIENT_SECRET");
-const googleClientId = env("GOOGLE_CLIENT_ID");
-const googleClientSecret = env("GOOGLE_CLIENT_SECRET");
+const googleClientId = firstEnv("GOOGLE_CLIENT_ID", "NEXT_PUBLIC_GOOGLE_CLIENT_ID");
+const googleClientSecret = firstEnv("GOOGLE_CLIENT_SECRET", "NEXT_PUBLIC_GOOGLE_CLIENT_SECRET");
 const useGrokBroker = Boolean(grokClientId && grokClientSecret);
 const useGoogle = Boolean(googleClientId && googleClientSecret);
 
