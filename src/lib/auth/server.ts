@@ -103,6 +103,11 @@ const LOCAL_DEV_ORIGINS: string[] = [
   "http://127.0.0.1:8080",
   "http://[::1]:8080",
 ];
+const WOODS_ORIGINS: string[] = [
+  "https://joinwoods.co",
+  "https://www.joinwoods.co",
+  "https://*.netlify.app",
+];
 const baseURL = explicitBaseURL ?? {
   // Include loopback hosts so dynamic baseURL resolves for local email/password
   // (not only the preview wildcard).
@@ -118,11 +123,11 @@ const baseURL = explicitBaseURL ?? {
 const trustedOrigins: string[] = explicitBaseURL
   ? [
       explicitBaseURL,
-      "https://www.joinwoods.co",
-      "https://*.netlify.app",
+      ...WOODS_ORIGINS,
       ...LOCAL_DEV_ORIGINS,
     ]
   : [
+      ...WOODS_ORIGINS,
       // Host wildcards (matched against Origin's host)
       ...previewAllowedHosts,
       // Full-origin wildcards (matched against Origin)
