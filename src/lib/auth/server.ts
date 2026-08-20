@@ -119,6 +119,7 @@ const trustedOrigins: string[] = explicitBaseURL
   ? [
       explicitBaseURL,
       "https://www.joinwoods.co",
+      "https://*.netlify.app",
       ...LOCAL_DEV_ORIGINS,
     ]
   : [
