@@ -15,6 +15,20 @@ function Login() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
+  async function onGoogle() {
+    setError(null);
+    try {
+      const res = await authClient.signIn.social({ provider: "google", callbackURL: "/home" });
+      if (res.error) throw new Error(res.error.message);
+    } catch (err) {
+      setError(
+        err instanceof Error
+          ? `${err.message}. Google login needs to be configured in the site settings.`
+          : "Google login needs to be configured in the site settings.",
+      );
+    }
+  }
+
   async function onEmail(e: FormEvent) {
     e.preventDefault();
     setBusy(true);
@@ -62,9 +76,7 @@ function Login() {
                 type="button"
                 variant="outline"
                 className="w-full"
-                onClick={() =>
-                  void authClient.signIn.social({ provider: "google", callbackURL: "/home" })
-                }
+                onClick={() => void onGoogle()}
               >
                 Continue with Google
               </Button>
