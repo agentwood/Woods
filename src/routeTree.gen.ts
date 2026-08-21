@@ -21,6 +21,7 @@ import { Route as AppExploreRouteImport } from './routes/_app/explore'
 import { Route as AppHomeRouteImport } from './routes/_app/home'
 import { Route as AppPricingRouteImport } from './routes/_app/pricing'
 import { Route as AppProfileRouteImport } from './routes/_app/profile'
+import { Route as ApiAuthDebugRouteImport } from './routes/api/auth-debug'
 import { Route as TrySlugRouteImport } from './routes/try.$slug'
 import { Route as AppLearnLessonIdRouteImport } from './routes/_app/learn.$lessonId'
 import { Route as AppPracticeConceptIdRouteImport } from './routes/_app/practice.$conceptId'
@@ -89,6 +90,11 @@ const AppProfileRoute = AppProfileRouteImport.update({
   path: '/profile',
   getParentRoute: () => AppRoute,
 } as any)
+const ApiAuthDebugRoute = ApiAuthDebugRouteImport.update({
+  id: '/api/auth-debug',
+  path: '/api/auth-debug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const TrySlugRoute = TrySlugRouteImport.update({
   id: '/try/$slug',
   path: '/try/$slug',
@@ -142,6 +148,7 @@ export interface FileRoutesByFullPath {
   '/home': typeof AppHomeRoute
   '/pricing': typeof AppPricingRoute
   '/profile': typeof AppProfileRoute
+  '/api/auth-debug': typeof ApiAuthDebugRoute
   '/try/$slug': typeof TrySlugRoute
   '/learn/$lessonId': typeof AppLearnLessonIdRoute
   '/practice/$conceptId': typeof AppPracticeConceptIdRoute
@@ -163,6 +170,7 @@ export interface FileRoutesByTo {
   '/home': typeof AppHomeRoute
   '/pricing': typeof AppPricingRoute
   '/profile': typeof AppProfileRoute
+  '/api/auth-debug': typeof ApiAuthDebugRoute
   '/try/$slug': typeof TrySlugRoute
   '/learn/$lessonId': typeof AppLearnLessonIdRoute
   '/practice/$conceptId': typeof AppPracticeConceptIdRoute
@@ -186,6 +194,7 @@ export interface FileRoutesById {
   '/_app/home': typeof AppHomeRoute
   '/_app/pricing': typeof AppPricingRoute
   '/_app/profile': typeof AppProfileRoute
+  '/api/auth-debug': typeof ApiAuthDebugRoute
   '/try/$slug': typeof TrySlugRoute
   '/_app/learn/$lessonId': typeof AppLearnLessonIdRoute
   '/_app/practice/$conceptId': typeof AppPracticeConceptIdRoute
@@ -209,6 +218,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/pricing'
     | '/profile'
+    | '/api/auth-debug'
     | '/try/$slug'
     | '/learn/$lessonId'
     | '/practice/$conceptId'
@@ -230,6 +240,7 @@ export interface FileRouteTypes {
     | '/home'
     | '/pricing'
     | '/profile'
+    | '/api/auth-debug'
     | '/try/$slug'
     | '/learn/$lessonId'
     | '/practice/$conceptId'
@@ -252,6 +263,7 @@ export interface FileRouteTypes {
     | '/_app/home'
     | '/_app/pricing'
     | '/_app/profile'
+    | '/api/auth-debug'
     | '/try/$slug'
     | '/_app/learn/$lessonId'
     | '/_app/practice/$conceptId'
@@ -269,6 +281,7 @@ export interface RootRouteChildren {
   ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   ResetPasswordRoute: typeof ResetPasswordRoute
+  ApiAuthDebugRoute: typeof ApiAuthDebugRoute
   TrySlugRoute: typeof TrySlugRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
   ApiStripeWebhookRoute: typeof ApiStripeWebhookRoute
@@ -359,6 +372,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/profile'
       preLoaderRoute: typeof AppProfileRouteImport
       parentRoute: typeof AppRoute
+    }
+    '/api/auth-debug': {
+      id: '/api/auth-debug'
+      path: '/api/auth-debug'
+      fullPath: '/api/auth-debug'
+      preLoaderRoute: typeof ApiAuthDebugRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/try/$slug': {
       id: '/try/$slug'
@@ -466,6 +486,7 @@ const rootRouteChildren: RootRouteChildren = {
   ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   ResetPasswordRoute: ResetPasswordRoute,
+  ApiAuthDebugRoute: ApiAuthDebugRoute,
   TrySlugRoute: TrySlugRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
   ApiStripeWebhookRoute: ApiStripeWebhookRoute,
