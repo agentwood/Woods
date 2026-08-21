@@ -49,7 +49,7 @@ function Landing() {
               </Link>
             </div>
             <p className="mt-7 text-xs font-semibold uppercase tracking-[0.16em] text-muted">
-              Learn up to 4× faster · Join 30,000+ learners building useful skills
+              Shorter practice loops · Practical skills · Start free
             </p>
           </div>
         </div>
