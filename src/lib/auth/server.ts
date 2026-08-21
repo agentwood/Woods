@@ -199,7 +199,20 @@ export const auth = betterAuth({
   // CSRF / origin check for credentialed auth POSTs (email sign-up/sign-in, …).
   // See `trustedOrigins` construction above — must cover live preview hosts AND
   // local loopback variants, or clients get "Invalid origin".
-  trustedOrigins,
+  trustedOrigins: async (request?: Request) => {
+    if (!request) return trustedOrigins;
+    const origin = request.headers.get("origin");
+    if (!origin) return trustedOrigins;
+    try {
+      const host = new URL(origin).hostname;
+      if (host === "joinwoods.co" || host.endsWith(".joinwoods.co") || host.endsWith(".netlify.app")) {
+        return [...trustedOrigins, origin];
+      }
+    } catch {
+      /* Better Auth will reject malformed origins. */
+    }
+    return trustedOrigins;
+  },
 
   // Encrypt broker-issued OAuth tokens at rest, and treat the broker's upstreams
   // as trusted first-party identities. The broker owns identity and X emails are
