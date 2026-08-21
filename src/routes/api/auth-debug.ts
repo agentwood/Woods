@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { authConfigured } from "@/lib/auth/server";
 
 export const Route = createFileRoute("/api/auth-debug")({
   server: {
@@ -15,6 +16,7 @@ export const Route = createFileRoute("/api/auth-debug")({
           googleClientId: Boolean(clientId || fallbackId),
           googleClientSecret: Boolean(clientSecret || fallbackSecret),
           googleProviderReady: Boolean((clientId || fallbackId) && (clientSecret || fallbackSecret)),
+          authConfigured,
           commit: "c913f38",
         });
       },

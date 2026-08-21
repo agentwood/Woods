@@ -1,4 +1,4 @@
-import { useState, type FormEvent } from "react";
+import { useEffect, useState, type FormEvent } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { GROK_PROVIDERS, authClient, authEnabled, signIn } from "@/lib/auth/client";
 import { WoodsMark } from "@/components/layout/mark";
@@ -15,7 +15,12 @@ function Login() {
   const [error, setError] = useState<string | null>(null);
   const [busy, setBusy] = useState(false);
 
+  useEffect(() => {
+    void fetch("/api/auth-debug", { headers: { "cache-control": "no-cache" } }).catch(() => undefined);
+  }, []);
+
   async function onGoogle() {
+    setBusy(true);
     setError(null);
     try {
       const res = await authClient.signIn.social({ provider: "google", callbackURL: "/home" });
@@ -26,6 +31,7 @@ function Login() {
           ? `${err.message}. Google login needs to be configured in the site settings.`
           : "Google login needs to be configured in the site settings.",
       );
+      setBusy(false);
     }
   }
 
@@ -77,8 +83,9 @@ function Login() {
                 variant="outline"
                 className="w-full"
                 onClick={() => void onGoogle()}
+                disabled={busy}
               >
-                Continue with Google
+                {busy ? "Opening Google…" : "Continue with Google"}
               </Button>
             ) : null}
             {typeof window !== "undefined" &&
